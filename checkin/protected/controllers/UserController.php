@@ -20,7 +20,6 @@ class UserController extends Controller
       $checkinForm->attributes = $_POST['CheckinForm'];
       if ($checkinForm->validate()) 
       {
-
         // find user with phone number
         $user = User::model()->find('phone=:phone', array(':phone' => $checkinForm->phone));
 
@@ -47,12 +46,10 @@ class UserController extends Controller
           die('failed saving checkin');
         }
 
-        // send email
+        $this->sendEmail($user);
 
         // redirect to checkins
-        if ($recentCheckin) {
-          $this->redirect(array('user/checkins'));
-        }
+        $this->redirect(array('user/checkins'));
       }
     }
 
@@ -99,6 +96,8 @@ class UserController extends Controller
         // save user ID to the session
         Yii::app()->session['user_id'] = $user->id;
 
+        $this->sendEmail($user);
+
         // redirect to the checkin list
         $this->redirect(array('user/checkins'));
       }
@@ -131,30 +130,24 @@ class UserController extends Controller
     ));
   }
 
-  // Uncomment the following methods and override them if needed
-  /*
-  public function filters()
+  /**
+   * Send email to a user with their total points.
+   * @param UserModel $user The user get points for and send mail to.
+   */
+  protected function sendEmail($user)
   {
-    // return the filter configuration for this controller, e.g.:
-    return array(
-      'inlineFilterName',
-      array(
-        'class'=>'path.to.FilterClass',
-        'propertyName'=>'propertyValue',
-      ),
-    );
-  }
+    $checkinCount = Yii::app()->db->createCommand()
+      ->select('COUNT(*) AS total_checkins')
+      ->from('checkins')
+      ->where("user_id={$user->id}")
+      ->queryRow();
 
-  public function actions()
-  {
-    // return external action classes, e.g.:
-    return array(
-      'action1'=>'path.to.ActionClass',
-      'action2'=>array(
-        'class'=>'path.to.AnotherActionClass',
-        'propertyName'=>'propertyValue',
-      ),
-    );
+    $message = "Thanks for checking in! You new point total is {$checkinCount['total_checkins']} points.";
+    $headers = "From: Checkin App <checkinapp@example.com>\r\n".
+      "Reply-To: checkinapp@example.com\r\n".
+      "MIME-Version: 1.0\r\n".
+      "Content-Type: text/plain; charset=UTF-8";
+
+    mail($user->email, 'Thanks for checking in!', $message , $headers);
   }
-  */
 }
