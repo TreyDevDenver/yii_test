@@ -18,13 +18,41 @@ class UserController extends Controller
     if (isset($_POST['CheckinForm'])) 
     {
       $checkinForm->attributes = $_POST['CheckinForm'];
-      if ($checkinForm->validates()) 
+      if ($checkinForm->validate()) 
       {
+
         // find user with phone number
-        // maybe add new checkin
+        $user = User::model()->find('phone=:phone', array(':phone' => $checkinForm->phone));
+
+        // phone not found, redirect to register
+        if (!$user) {
+          $this->redirect(array('user/register'));
+        }
+
+        // save user ID to the session
+        Yii::app()->session['user_id'] = $user->id;
+
+        // find checkins in the last 5 minutes, if there is one, redirect to the list
+        $recentCheckin = Checkin::model()->find('user_id = ' . $user->id . ' AND created_at > \'' . date('Y-m-d H:i:s', strtotime('-5 minutes')) . '\'');
+        if ($recentCheckin) {
+          $this->redirect(array('user/checkins'));
+        }
+
+        // add a 20 point checkin for the user
+        $checkin = new Checkin;
+        $checkin->user_id = $user->id;
+        $checkin->num_points = 20;
+        if (!$checkin->save()) {
+          // failed saving checkin!
+          die('failed saving checkin');
+        }
+
         // send email
-        // save user id to session
+
         // redirect to checkins
+        if ($recentCheckin) {
+          $this->redirect(array('user/checkins'));
+        }
       }
     }
 
@@ -84,9 +112,23 @@ class UserController extends Controller
    */
   public function actionCheckins()
   {
-    // get user id from session
+    // get user id from session, or redirect to checkin
+    $userId = Yii::app()->session['user_id'];
+    if (!$userId) 
+    {
+      $this->redirect(array('user'));
+    }
+
+    $checkinMetrics = Yii::app()->db->createCommand()
+      ->select('COUNT(*) AS total_checkins, SUM(num_points) AS total_points')
+      ->from('checkins')
+      ->where("user_id=$userId")
+      ->queryRow();
+
     // get checkins for user
-    $this->render('checkins');
+    $this->render('checkins', array(
+      'checkinMetrics' => $checkinMetrics
+    ));
   }
 
   // Uncomment the following methods and override them if needed
