@@ -19,13 +19,13 @@ vagrantfile:
                         check_guest_tools: 0
                         update_guest_tools: 0
                 machines:
-                    vflm_v3pwabqiria4:
+                    vflm_xs5drn4sgc2o:
                         id: yiitest
                         hostname: yii.test
                         network:
                             private_network: 192.168.56.101
                             forwarded_port:
-                                vflmnfp_6qhsba8ngsfd:
+                                vflmnfp_z8obgk27pnv7:
                                     host: '9702'
                                     guest: '22'
                         memory: '2048'
@@ -40,7 +40,7 @@ vagrantfile:
                     - '--verbose'
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
         synced_folder:
-            vflsf_jefqgnkqduiv:
+            vflsf_zukutkdz8rgn:
                 owner: www-data
                 group: www-data
                 source: ./
@@ -127,7 +127,7 @@ nginx:
         names_hash_bucket_size: 128
     upstreams: {  }
     vhosts:
-        nxv_8ri14gdijjgy:
+        nxv_vxtd462um2yb:
             server_name: awesome.dev
             server_aliases:
                 - www.awesome.dev
@@ -136,7 +136,7 @@ nginx:
             client_max_body_size: 1m
             ssl: '0'
             locations:
-                nxvl_x9npyukv42cu:
+                nxvl_n4e9hdji29zr:
                     www_root: /var/www/awesome/web
                     location: /
                     autoindex: 'off'
@@ -155,7 +155,7 @@ nginx:
                     fastcgi_split_path: ''
                     proxy: ''
                     proxy_redirect: ''
-                nxvl_bgwj37v2maps:
+                nxvl_7t59sxwbty8l:
                     www_root: /var/www/awesome/web
                     location: '~ ^/(app_dev|config)\.php(/|$)'
                     autoindex: 'off'
@@ -174,7 +174,7 @@ nginx:
                         - '$path_info $fastcgi_path_info'
                     proxy: ''
                     proxy_redirect: ''
-                nxvl_37tg1drp8sj5:
+                nxvl_7silm46yfru7:
                     www_root: /var/www/awesome/web
                     location: '~ ^/index\.php(/|$)'
                     autoindex: 'off'
@@ -192,7 +192,7 @@ nginx:
                         - '$path_info $fastcgi_path_info'
                     proxy: ''
                     proxy_redirect: ''
-                nxvl_9id1zypmf7gf:
+                nxvl_y41qhhs0aqux:
                     www_root: /var/www/awesome/web
                     location: '~ ^/app\.php(/|$)'
                     autoindex: 'off'
@@ -226,9 +226,9 @@ apache:
         - proxy_fcgi
         - rewrite
     vhosts:
-        av_46ra1649x2p9:
+        av_16rjs5n3lrlh:
             servername: yii.dev
-            docroot: /var/www
+            docroot: /var/www/checkin
             port: '80'
             setenvif:
                 - 'Authorization "(.*)" HTTP_AUTHORIZATION=$1'
@@ -241,8 +241,8 @@ apache:
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                avd_p54dpuhjlv5k:
-                    path: /var/www
+                avd_vj6hulwcd441:
+                    path: /var/www/checkin
                     directoryindex: 'index.php app.dev'
                     options:
                         - Indexes
@@ -255,21 +255,21 @@ apache:
                     custom_fragment: ''
                     provider: directory
             files_match:
-                avfm_ecd8efx46ihs:
+                avfm_5f5jszvh4klw:
                     path: (app_dev|config)\.php$
                     sethandler: 'proxy:fcgi://127.0.0.1:9000'
                     setenv:
                         - 'APP_ENV dev'
                     custom_fragment: ''
                     provider: filesmatch
-                avfm_ps73to1m40gf:
+                avfm_s83312pz93gi:
                     path: app\.php$
                     sethandler: 'proxy:fcgi://127.0.0.1:9000'
                     setenv:
                         - 'APP_ENV prod'
                     custom_fragment: ''
                     provider: filesmatch
-                avfm_pab9th2gquuq:
+                avfm_aewcojisz9gd:
                     path: \.php$
                     sethandler: 'proxy:fcgi://127.0.0.1:9000'
                     custom_fragment: ''
@@ -299,7 +299,7 @@ php:
     fpm_ini:
         error_log: /var/log/php-fpm.log
     fpm_pools:
-        phpfp_kx4hkqr9ad3z:
+        phpfp_hne55j4cymsw:
             ini:
                 prefix: www
                 listen: '127.0.0.1:9000'
@@ -342,7 +342,7 @@ drush:
 ruby:
     install: '1'
     versions:
-        rv_btzjpo61bo3a:
+        rv_4xkgws4whsmu:
             default: '1'
             bundler: '1'
             version: 2.3.1
@@ -366,15 +366,15 @@ mariadb:
         root_password: '123'
         override_options: {  }
     users:
-        mariadbnu_b858ymy0wvhs:
+        mariadbnu_vhwde720te5w:
             name: dbuser
             password: '123'
     databases:
-        mariadbnd_vsqho2js7e00:
+        mariadbnd_y4gk3ct12nk1:
             name: dbname
             sql: ''
     grants:
-        mariadbng_mudqlcbw741i:
+        mariadbng_9s7lhny9uf8t:
             user: dbuser
             table: '*.*'
             privileges:
@@ -386,15 +386,15 @@ mysql:
         root_password: root
         override_options: {  }
     users:
-        mysqlnu_4nqz0gmtbdm7:
+        mysqlnu_u13nn9puqde7:
             name: dbuser
             password: dbuser
     databases:
-        mysqlnd_ipa8kqx451p6:
+        mysqlnd_duntjqetbfhf:
             name: yiidb
             sql: ''
     grants:
-        mysqlng_gn2n85h02yj0:
+        mysqlng_o4rkd37qip0t:
             user: dbuser
             table: '*.*'
             privileges:
@@ -419,7 +419,7 @@ mongodb:
         version: 2.6.0
     databases: {  }
 redis:
-    install: '1'
+    install: '0'
     settings:
         port: '6379'
 sqlite:
@@ -457,7 +457,7 @@ elastic_search:
         version: 2.3.1
         java_install: true
     instances:
-        esi_fy15dhameql3:
+        esi_7lyb1i7kuvtn:
             name: es-01
 solr:
     install: '0'

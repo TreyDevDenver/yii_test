@@ -8,6 +8,7 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Checkin App',
+	'defaultController' => 'user',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
