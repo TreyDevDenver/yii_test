@@ -4,6 +4,9 @@ class CheckinForm extends CFormModel
 {
 	public $phone;
 
+	/**
+	 * Declares the validation rules.
+	 */
 	public function rules()
 	{
 		return array(

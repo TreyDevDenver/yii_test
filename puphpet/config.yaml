@@ -289,6 +289,8 @@ php:
             - cli
             - intl
             - xml
+            - zip
+            - curl
         pear: {  }
         pecl: {  }
     ini:
@@ -309,7 +311,7 @@ php:
     composer: '1'
     composer_home: ''
 xdebug:
-    install: '0'
+    install: '1'
     settings:
         xdebug.default_enable: '1'
         xdebug.remote_autostart: '0'
@@ -392,6 +394,9 @@ mysql:
     databases:
         mysqlnd_duntjqetbfhf:
             name: yiidb
+            sql: ''
+        mysqlnd_7dcbygsl24y5:
+            name: yiidb_test
             sql: ''
     grants:
         mysqlng_o4rkd37qip0t:
