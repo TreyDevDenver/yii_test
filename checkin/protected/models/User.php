@@ -47,6 +47,9 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'checkins' => array(
+				self::HAS_MANY, 'Checkin', 'user_id'
+			)
 		);
 	}
 
