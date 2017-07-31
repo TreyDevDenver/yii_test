@@ -25,6 +25,7 @@ class UserController extends Controller
 
         // phone not found, redirect to register
         if (!$user) {
+          Yii::app()->user->setFlash('warning', 'You must register before you can check in.');
           $this->redirect(array('user/register'));
         }
 
@@ -34,6 +35,7 @@ class UserController extends Controller
         // find checkins in the last 5 minutes, if there is one, redirect to the list
         $recentCheckin = Checkin::model()->find('user_id = ' . $user->id . ' AND created_at > \'' . date('Y-m-d H:i:s', strtotime('-5 minutes')) . '\'');
         if ($recentCheckin) {
+          Yii::app()->user->setFlash('warning', 'It\'s too soon. Please wait a bit before checking in again.');
           $this->redirect(array('user/checkins'));
         }
 
@@ -42,13 +44,14 @@ class UserController extends Controller
         $checkin->user_id = $user->id;
         $checkin->num_points = 20;
         if (!$checkin->save()) {
-          // failed saving checkin!
-          die('failed saving checkin');
+          Yii::app()->user->setFlash('error', 'Failed saving check in. Please try again.');
+          $this->refresh();
         }
 
         $this->sendEmail($user);
 
         // redirect to checkins
+        Yii::app()->user->setFlash('success', 'Saved a new check in for 20 points.');
         $this->redirect(array('user/checkins'));
       }
     }
@@ -80,8 +83,8 @@ class UserController extends Controller
       {
         // form inputs are valid, create the user
         if (!$user->save()) {
-          // failed saving user!
-          die('failed saving user');
+          Yii::app()->user->setFlash('error', 'Failed saving user. Please try again.');
+          $this->refresh();
         }
 
         // add a 50 point first checkin for the user
@@ -89,8 +92,8 @@ class UserController extends Controller
         $checkin->user_id = $user->id;
         $checkin->num_points = 50;
         if (!$checkin->save()) {
-          // failed saving checkin!
-          die('failed saving checkin');
+          Yii::app()->user->setFlash('error', 'Failed saving check in. Please try again.');
+          $this->refresh();
         }
 
         // save user ID to the session
@@ -99,6 +102,7 @@ class UserController extends Controller
         $this->sendEmail($user);
 
         // redirect to the checkin list
+        Yii::app()->user->setFlash('success', 'Your account has been created and you were awarded 50 points.');
         $this->redirect(array('user/checkins'));
       }
     }
@@ -115,6 +119,8 @@ class UserController extends Controller
     $userId = Yii::app()->session['user_id'];
     if (!$userId) 
     {
+      Yii::app()->user->setFlash('warning', 'You must check in before you can view your points.');
+      $this->redirect(array('user/index'));
       $this->redirect('/');
     }
 

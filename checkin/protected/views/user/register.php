@@ -11,7 +11,9 @@ $this->pageTitle=Yii::app()->name . ' - Register';
 	<p>Complete the form below to earn 50 points.</p>
 </div>
 
-<div class="container">
+<?php
+$this->widget('application.components.FlashWidget');
+?>
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'user-register-form',
@@ -64,5 +66,3 @@ $this->pageTitle=Yii::app()->name . ' - Register';
 	)); ?>
 
 <?php $this->endWidget(); ?>
-
-</div><!-- form -->

@@ -9,6 +9,16 @@ $this->pageTitle=Yii::app()->name . ' - Check In';
 	<p>Please enter your phone number below to check in and receive more points.</p>
 </div>
 
+<?php
+    foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="alert alert-' . $key . '">' . $message . "</div>\n";
+    }
+?>
+
+<?php
+$this->widget('application.components.FlashWidget');
+?>
+
 <div class="well">
 
 <?php $form = $this->beginWidget('CActiveForm', array(
