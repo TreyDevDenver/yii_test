@@ -15,7 +15,7 @@ This app was created to play around with the Yii 1.1.x framework.
 4. Visit [http://yii.dev](http://yii.dev) in your browser.
 
 ## Test
-I haven't written any tests yet, but I did get the VM setup with the requirements for doin so. Running that you go like this:
+I haven't written any tests yet, but I did get the VM setup with the requirements for doin so. Running that would go like this:
 1. Start the VM. Run `vagrant up` from this directory.
 2. Change to the test directory: `cd /var/www/checkin/protected/tests`
 3. Run PHPUnit as usual: `phpunit`
