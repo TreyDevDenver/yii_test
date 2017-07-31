@@ -1,12 +1,16 @@
 <?php
 /* @var $this UserController */
 
-$this->breadcrumbs=array(
-	'User'=>array('/user'),
-	'Checkins',
-);
+$this->pageTitle=Yii::app()->name . ' - Your Points';
+
+// format the check total
+$displayCheckins = $checkinMetrics['total_checkins'] . ' time';
+if ($checkinMetrics['total_checkins'] > 1) {
+	$displayCheckins .= 's';
+}
 ?>
 
-<pre><code>
-<?php print_r($checkinMetrics) ?>
-</code></code>
+<div class="jumbotron">
+	<h1>Your Points</h1>
+	<p>You have checked in <?php echo $displayCheckins ?> and earned <?php echo $checkinMetrics['total_points'] ?> points.</p>
+</div>

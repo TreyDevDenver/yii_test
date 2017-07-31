@@ -115,7 +115,7 @@ class UserController extends Controller
     $userId = Yii::app()->session['user_id'];
     if (!$userId) 
     {
-      $this->redirect(array('user'));
+      $this->redirect('/');
     }
 
     $checkinMetrics = Yii::app()->db->createCommand()
